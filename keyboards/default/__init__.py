@@ -1,2 +1,2 @@
-from . import elementmenu
-from . import startmenu
+from . import userskeydef
+from . import admindefkey
