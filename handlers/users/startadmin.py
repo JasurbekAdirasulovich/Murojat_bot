@@ -7,10 +7,6 @@ from keyboards.inline.adminkey import boshqaruv
 
 
 
-
-
-
-
 from loader import dp, db
 
 @dp.message_handler(chat_id = ADMINS , commands='start')
