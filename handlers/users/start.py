@@ -1,22 +1,33 @@
 from aiogram import types
+
 from aiogram.dispatcher.filters.builtin import CommandStart
-from aiogram.types import ReplyKeyboardRemove
 
 
 
 
-from keyboards.inline.userskey import roziman
+import sqlite3
 
-from loader import dp
+
+
+
+from keyboards.inline.userskey import lang
+
+from loader import dp, db
 
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
 
 
-    await dp.bot.send_message(message.from_user.id ,f'Salom {message.from_user.username} botga xush kelibsiz!\n')
-    await dp.bot.send_message(message.from_user.id,f'Quyidagi qoidalar bilan tanishib chiqib maqul bo`lsa pastdagi tugmani bosing.\n'
-                            '1. qoida bir. \n'
-                            '2. Qoida ikki. \n'
-                            '3. Qoida uch. \n'
-                            '4. Qoida tort', reply_markup=roziman)
+    await message.answer(f'Salom {message.from_user.username} botga xush kelibsiz!\n')
+    await message.answer(f'Choose one of the languages\n'
+                              f'Tillardan birini tanlang\n'
+                              f'\nВыберите один из языков',reply_markup=lang)
+
+    username = message.from_user.username
+    userid = message.from_user.id
+
+    try:
+        db.add_user(Username=username, UserId=userid)
+    except sqlite3.IntegrityError as err:
+        pass
